@@ -3,38 +3,42 @@
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: #000;
+  background: #0a0a0f;
   color: #fff;
   overflow-x: hidden;
   position: relative;
 }
 
+/* 🌟 Fondo borroso elegante */
 .fondo-borroso {
   position: fixed;
   inset: 0;
   background-size: cover;
   background-position: center;
-  filter: blur(35px) brightness(0.4);
+  filter: blur(40px) brightness(0.35);
   z-index: -1;
   transition: background-image 1s ease;
 }
 
+/* 🔹 Header */
 header {
   text-align: center;
   padding: 20px 0;
-  background: linear-gradient(90deg, #1a001f, #250030);
-  box-shadow: 0 0 15px #ff5500;
+  background: linear-gradient(90deg, #120a1a, #1f0f25);
+  box-shadow: 0 0 20px rgba(217,191,119,0.2); /* dorado suave */
 }
 
+/* Logo */
 .logo {
   width: 150px;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, filter 0.3s ease;
 }
 .logo:hover {
   transform: scale(1.1);
-  filter: drop-shadow(0 0 15px #ff6600);
+  filter: drop-shadow(0 0 15px rgba(217,191,119,0.6));
 }
 
+/* 🔹 Contenedor principal */
 main {
   display: flex;
   flex-direction: column;
@@ -42,41 +46,44 @@ main {
   padding: 40px 20px;
 }
 
+/* Información película */
 .info {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 30px;
   max-width: 1200px;
-  background: rgba(20, 0, 30, 0.6);
-  border: 2px solid #ff6600;
+  background: rgba(20, 10, 30, 0.6);
   border-radius: 15px;
   padding: 25px;
-  box-shadow: 0 0 30px #ff4500;
+  box-shadow: 0 0 25px rgba(217,191,119,0.15);
 }
 
+/* Poster */
 .poster {
   width: 300px;
-  border-radius: 10px;
-  box-shadow: 0 0 25px rgba(255, 85, 0, 0.7);
-  transition: transform 0.3s ease;
+  border-radius: 12px;
+  box-shadow: 0 0 25px rgba(217,191,119,0.4);
+  transition: transform 0.3s ease, filter 0.3s ease;
 }
 .poster:hover {
   transform: scale(1.05);
+  filter: brightness(1.1);
 }
 
+/* Detalles */
 .detalles {
   max-width: 600px;
 }
 
 .detalles h1 {
-  color: #ff6600;
-  text-shadow: 0 0 10px #ff3300;
+  color: #ffdca8; /* dorado suave */
+  text-shadow: 0 0 12px rgba(217,191,119,0.6);
   margin-bottom: 10px;
 }
 
 .detalles p {
-  color: #ddd;
+  color: #e0d8c0;
   line-height: 1.6;
   margin-bottom: 15px;
 }
@@ -91,28 +98,30 @@ ul li {
   margin: 5px 0;
 }
 
+/* Botón ver película */
 #verBtn {
-  background: #ff6600;
+  background: rgba(217,191,119,0.85);
   border: none;
-  color: #fff;
+  color: #0a0a0f;
   font-size: 1.1rem;
   font-weight: 600;
   padding: 12px 25px;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
-  transition: 0.3s ease;
+  transition: all 0.3s ease;
 }
 #verBtn:hover {
-  background: #ff3300;
-  box-shadow: 0 0 15px #ff3300;
+  background: rgba(217,191,119,1);
+  box-shadow: 0 0 15px rgba(217,191,119,0.6);
 }
 
+/* Mensaje autoplay */
 .autoplay-msg {
   margin-top: 10px;
-  color: #ffbb66;
+  color: #ffdca8;
   font-size: 1rem;
-  text-shadow: 0 0 10px #ff6600;
-  animation: parpadeo 1s infinite alternate;
+  text-shadow: 0 0 10px rgba(217,191,119,0.5);
+  animation: parpadeo 1.2s infinite alternate;
 }
 
 @keyframes parpadeo {
@@ -120,6 +129,7 @@ ul li {
   to { opacity: 0.6; }
 }
 
+/* Contenedor del video */
 .video-container {
   display: none;
   position: fixed;
@@ -130,14 +140,22 @@ ul li {
   z-index: 999;
 }
 
+/* Video */
 video {
   width: 90%;
   max-width: 900px;
-  border: 3px solid #ff6600;
-  border-radius: 10px;
-  box-shadow: 0 0 30px #ff3300;
+  border-radius: 12px;
+  box-shadow: 0 0 30px rgba(217,191,119,0.4);
+  outline: none;
 }
 
+/* Quitar borde en full screen */
+video:-webkit-full-screen { outline: none; }
+video:-moz-full-screen { outline: none; }
+video:-ms-fullscreen { outline: none; }
+video:fullscreen { outline: none; }
+
+/* Botón cerrar video */
 #cerrarVideo {
   position: absolute;
   top: 30px;
@@ -145,10 +163,30 @@ video {
   font-size: 2rem;
   background: none;
   border: none;
-  color: #ff6600;
+  color: #ffdca8;
   cursor: pointer;
-  transition: 0.2s;
+  transition: 0.2s ease;
 }
 #cerrarVideo:hover {
-  color: #ff3300;
+  color: #e0c080;
+  filter: drop-shadow(0 0 10px rgba(217,191,119,0.5));
+}
+
+/* 📱 Responsive */
+@media(max-width:768px){
+  main {
+    padding: 20px 15px;
+  }
+
+  .poster {
+    width: 220px;
+  }
+
+  .detalles h1 {
+    font-size: 1.5rem;
+  }
+
+  video {
+    max-width: 100%;
+  }
 }

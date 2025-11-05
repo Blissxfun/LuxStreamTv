@@ -1,7 +1,11 @@
+// URL del archivo JSON
 const url = "https://raw.githubusercontent.com/Blissxfun/LuxStream/main/peliculas.json";
+
+// Obtener el ID desde la URL (ver.html?id=123)
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
+// Referencias a los elementos HTML
 const imagen = document.getElementById("imagen");
 const titulo = document.getElementById("titulo");
 const descripcion = document.getElementById("descripcion");
@@ -19,35 +23,54 @@ const fondoBorroso = document.getElementById("fondoBorroso");
 const contador = document.getElementById("contador");
 
 let segundos = 5;
-let peli;
+let peli = null;
 
+// 🔹 Cargar las películas
 fetch(url)
   .then(res => res.json())
   .then(peliculas => {
+    // Buscar la película por ID
     peli = peliculas.find(p => p.id === id);
-    if (!peli) return alert("Película no encontrada 😢");
 
-    imagen.src = peli.imagen;
-    titulo.textContent = peli.titulo;
-    descripcion.textContent = peli.descripcion;
-    año.textContent = peli.año;
-    duracion.textContent = peli.duracion;
-    clasificacion.textContent = peli.clasificacion;
-    idioma.textContent = peli.idioma;
-    director.textContent = peli.director;
-    actor.textContent = peli.actor;
-    fondoBorroso.style.backgroundImage = `url(${peli.imagen})`;
+    if (!peli) {
+      alert("❌ Película no encontrada.");
+      window.location.href = "index.html"; // volver a inicio
+      return;
+    }
 
-    verBtn.onclick = () => iniciarVideo(peli.url);
+    // Mostrar los datos de la película
+    mostrarDetalles(peli);
 
+    // Iniciar el contador
     iniciarCuentaRegresiva();
   })
-  .catch(err => console.error("Error al cargar:", err));
+  .catch(err => {
+    console.error("Error cargando las películas:", err);
+    alert("Hubo un error al cargar la película 😢");
+  });
 
+// 🔹 Función para mostrar la información
+function mostrarDetalles(p) {
+  imagen.src = p.imagen;
+  titulo.textContent = p.titulo;
+  descripcion.textContent = p.descripcion;
+  año.textContent = p.año;
+  duracion.textContent = p.duracion;
+  clasificacion.textContent = p.clasificacion;
+  idioma.textContent = p.idioma;
+  director.textContent = p.director;
+  actor.textContent = p.actor;
+  fondoBorroso.style.backgroundImage = `url(${p.imagen})`;
+
+  verBtn.onclick = () => iniciarVideo(p.url);
+}
+
+// 🔹 Cuenta regresiva antes de reproducir
 function iniciarCuentaRegresiva() {
   const intervalo = setInterval(() => {
     segundos--;
     contador.textContent = segundos;
+
     if (segundos <= 0) {
       clearInterval(intervalo);
       iniciarVideo(peli.url, true);
@@ -55,19 +78,21 @@ function iniciarCuentaRegresiva() {
   }, 1000);
 }
 
+// 🔹 Reproducir el video
 function iniciarVideo(url, auto = false) {
   video.src = url;
   videoContainer.style.display = "flex";
-  video.play();
+  video.play().catch(() => {});
 
-  // Pantalla completa automática
+  // Modo pantalla completa
   if (video.requestFullscreen) {
     video.requestFullscreen().catch(() => {});
   }
 }
 
+// 🔹 Cerrar el video
 cerrarVideo.onclick = () => {
   video.pause();
   videoContainer.style.display = "none";
-  document.exitFullscreen?.();
+  if (document.fullscreenElement) document.exitFullscreen();
 };

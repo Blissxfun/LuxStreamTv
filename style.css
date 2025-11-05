@@ -8,14 +8,14 @@
 }
 
 body {
-  background: radial-gradient(circle at top, #081010, #0f1610 70%);
+  background: radial-gradient(circle at top, #0b0e10, #081010 70%);
   color: #fff;
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
 }
 
-/* 🎄 Fondo navideño elegante */
+/* 🎄 Fondo navideño elegante con brillo y bokeh */
 body::before {
   content: "";
   position: fixed;
@@ -24,16 +24,32 @@ body::before {
   width: 100%;
   height: 100%;
   background:
-    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.05), transparent 60%),
-    radial-gradient(circle at 75% 75%, rgba(0, 128, 64, 0.08), transparent 60%);
-  filter: blur(100px);
-  z-index: -1;
+    radial-gradient(circle at 30% 20%, rgba(255, 60, 60, 0.15), transparent 70%),
+    radial-gradient(circle at 70% 80%, rgba(217, 191, 119, 0.1), transparent 60%),
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.05), transparent 80%);
+  filter: blur(80px);
+  z-index: -2;
   animation: bgMove 12s ease-in-out infinite alternate;
 }
 
 @keyframes bgMove {
   0% { transform: translate(0, 0); }
-  100% { transform: translate(15px, -15px); }
+  100% { transform: translate(20px, -10px); }
+}
+
+/* ✨ Nieve sutil */
+.snowflake {
+  position: fixed;
+  top: -10px;
+  color: #fff;
+  font-size: 10px;
+  opacity: 0.7;
+  animation: snow linear infinite;
+  z-index: 1000;
+}
+@keyframes snow {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
 }
 
 /* 🔺 Header */
@@ -42,25 +58,26 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 20px 40px;
-  background: rgba(15, 20, 15, 0.6);
-  backdrop-filter: blur(10px);
+  background: rgba(15, 20, 15, 0.7);
+  backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 25px rgba(217, 191, 119, 0.15);
   position: sticky;
   top: 0;
   z-index: 50;
 }
 
+/* 🎅 Logo */
 .logo {
   display: flex;
   align-items: center;
   gap: 12px;
   font-size: 1.9rem;
   font-weight: 700;
-  color: #d9bf77; /* dorado elegante */
-  text-shadow: 0 0 10px rgba(217,191,119,0.5);
+  color: #d9bf77;
+  text-shadow: 0 0 12px rgba(217,191,119,0.6);
   cursor: pointer;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .logo img {
@@ -73,9 +90,14 @@ header {
   box-shadow: 0 0 10px rgba(217,191,119,0.3);
 }
 
+.logo:hover {
+  color: #ffdca8;
+  transform: scale(1.02);
+}
+
 .logo img:hover {
   transform: scale(1.35);
-  filter: brightness(1.2);
+  filter: brightness(1.15);
 }
 
 /* 🔍 Buscador */
@@ -83,7 +105,7 @@ header {
   padding: 10px 15px;
   border-radius: 25px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.08);
   color: #fff;
   width: 230px;
   transition: all 0.3s ease;
@@ -92,10 +114,10 @@ header {
 .search-box input:focus {
   outline: none;
   border-color: #d9bf77;
-  box-shadow: 0 0 12px #d9bf77, 0 0 25px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 15px #d9bf77, 0 0 30px rgba(255, 255, 255, 0.1);
 }
 
-/* 🎬 Galería de películas */
+/* 🎬 Galería */
 main {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
@@ -111,12 +133,12 @@ main {
   background: rgba(255, 255, 255, 0.03);
   cursor: pointer;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
-  box-shadow: 0 0 10px rgba(217,191,119,0.1);
+  box-shadow: 0 0 10px rgba(217,191,119,0.08);
 }
 
 .pelicula:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(217,191,119,0.3);
+  transform: scale(1.06);
+  box-shadow: 0 0 30px rgba(255, 60, 60, 0.3), 0 0 50px rgba(217,191,119,0.2);
 }
 
 .pelicula img {
@@ -135,14 +157,22 @@ main {
   position: absolute;
   bottom: 0;
   width: 100%;
-  background: linear-gradient(0deg, rgba(0,0,0,0.85), transparent);
+  background: linear-gradient(0deg, rgba(0,0,0,0.9), transparent);
   padding: 10px;
   font-size: 1rem;
   color: #ffdca8;
   text-align: center;
   font-weight: 600;
-  text-shadow: 0 0 10px rgba(217,191,119,0.8);
+  text-shadow: 0 0 10px rgba(217,191,119,0.9);
   letter-spacing: 0.5px;
+}
+
+/* 🔶 Película seleccionada con control remoto */
+.pelicula.seleccionada {
+  outline: 3px solid #d9bf77;
+  box-shadow: 0 0 20px #d9bf77;
+  transform: scale(1.06);
+  transition: all 0.2s ease;
 }
 
 /* ❄️ Footer */
